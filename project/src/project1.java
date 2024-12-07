@@ -8,7 +8,7 @@ public class project1 {
 
             // 데이터베이스 연결
             Connection con = DriverManager.getConnection(
-                "jdbc:mysql://192.168.56.101:4567/",
+                "jdbc:mysql://192.168.56.101:4567/ClubManagementSystem",
                 "wylee",
                 "madiq8047!@"
             );
