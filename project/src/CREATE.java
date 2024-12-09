@@ -18,7 +18,7 @@ public class CREATE {
 
             // 데이터베이스 및 테이블 생성
             String createUserTable = "CREATE TABLE IF NOT EXISTS User (" +
-                        "UserID INT AUTO_INCREMENT PRIMARY KEY, " +
+                        "UserID INT PRIMARY KEY, " +
                         "Username VARCHAR(50) NOT NULL, " +
                         "Phone VARCHAR(20) NOT NULL, " +
                         "ID VARCHAR(50) NOT NULL, " +
@@ -35,7 +35,7 @@ public class CREATE {
                         "StudentID INT PRIMARY KEY, " +
                         "Club VARCHAR(50) NOT NULL, " +
                         "Grade INT NOT NULL, " +
-                        "ClubRole VARCHAR(20) NOT NULL, " +
+                        "ClubRole VARCHAR(20), " +
                         "FOREIGN KEY (StudentID) REFERENCES User(UserID) ON DELETE CASCADE ON UPDATE CASCADE);";
 
             String createClubTable = "CREATE TABLE IF NOT EXISTS Club (" +
