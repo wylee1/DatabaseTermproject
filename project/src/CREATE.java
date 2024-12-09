@@ -18,52 +18,52 @@ public class CREATE {
 
             // 데이터베이스 및 테이블 생성
             String createUserTable = "CREATE TABLE IF NOT EXISTS User (" +
-                                    "UserID INT AUTO_INCREMENT PRIMARY KEY, "+
-                                    "Username VARCHAR(50) NOT NULL, "+
-                                    "Phone VARCHAR(20) NOT NULL, "+
-                                    "ID VARCHAR(50) NOT NULL, "+
-                                    "passwd VARCHAR(50) NOT NULL, "+
-                                    "address VARCHAR(50) NOT NULL);";
+                        "UserID INT AUTO_INCREMENT PRIMARY KEY, " +
+                        "Username VARCHAR(50) NOT NULL, " +
+                        "Phone VARCHAR(20) NOT NULL, " +
+                        "ID VARCHAR(50) NOT NULL, " +
+                        "passwd VARCHAR(50) NOT NULL, " +
+                        "Role VARCHAR(50) NOT NULL, " +
+                        "address VARCHAR(50) NOT NULL);";
 
             String createProfessorTable = "CREATE TABLE IF NOT EXISTS Professor (" +
-                                        "professorID INT AUTO_INCREMENT PRIMARY KEY, " +
-                                        "name VARCHAR(50) NOT NULL, " +
-                                        "clubName VARCHAR(50) NOT NULL, " +
-                                        "FOREIGN KEY (professorID) REFERENCES User(UserID) ON DELETE CASCADE ON UPDATE CASCADE);";
+                        "ProfessorID INT PRIMARY KEY, " +
+                        "Club VARCHAR(50) NOT NULL, " +
+                        "FOREIGN KEY (ProfessorID) REFERENCES User(UserID) ON DELETE CASCADE ON UPDATE CASCADE);";
 
             String createStudentTable = "CREATE TABLE IF NOT EXISTS Student (" +
-                                        "studentID INT AUTO_INCREMENT PRIMARY KEY, " +
-                                        "name VARCHAR(50) NOT NULL, " +
-                                        "clubName VARCHAR(50) NOT NULL, " +
-                                        "grade INT NOT NULL, " +
-                                        "position VARCHAR(50) NOT NULL, " +
-                                        "FOREIGN KEY (studentID) REFERENCES User(UserID) ON DELETE CASCADE ON UPDATE CASCADE);";
+                        "StudentID INT PRIMARY KEY, " +
+                        "Club VARCHAR(50) NOT NULL, " +
+                        "Grade INT NOT NULL, " +
+                        "ClubRole VARCHAR(20) NOT NULL, " +
+                        "FOREIGN KEY (StudentID) REFERENCES User(UserID) ON DELETE CASCADE ON UPDATE CASCADE);";
 
             String createClubTable = "CREATE TABLE IF NOT EXISTS Club (" +
-                                    "clubName VARCHAR(50) PRIMARY KEY, " +
-                                    "location VARCHAR(50) NOT NULL, " +
-                                    "equipment TEXT NOT NULL, " +
-                                    "ProfessorID INT NOT NULL, " +
-                                    "FOREIGN KEY (ProfessorID) REFERENCES Professor(professorID) ON DELETE CASCADE ON UPDATE CASCADE);";
+                        "clubName VARCHAR(50) PRIMARY KEY, " +
+                        "location VARCHAR(50) NOT NULL, " +
+                        "equipment TEXT NOT NULL, " +
+                        "ProfessorID INT NOT NULL, " +
+                        "FOREIGN KEY (ProfessorID) REFERENCES Professor(ProfessorID) ON DELETE CASCADE ON UPDATE CASCADE);";
+
 
             String createActivityTable = "CREATE TABLE IF NOT EXISTS Activity (" +
-                                        "activityName VARCHAR(50) PRIMARY KEY, " +
-                                        "clubName VARCHAR(50) NOT NULL, " +
-                                        "FOREIGN KEY (clubName) REFERENCES Club(clubName) ON DELETE CASCADE ON UPDATE CASCADE);";
-            
-            String createActivityDetailTable = "CREATE TABLE IF NOT EXISTS Activity (" +
-                                        "activityName VARCHAR(50) PRIMARY KEY, " +
-                                        "place VARCHAR(50) NOT NULL, " +
-                                        "date DATE NOT NULL, " +
-                                        "content TEXT NOT NULL, " +
-                                        "FOREIGN KEY (activityName) REFERENCES Activity(activityName) ON DELETE CASCADE ON UPDATE CASCADE);";
+                                    "activityName VARCHAR(50) PRIMARY KEY, " +
+                                    "clubName VARCHAR(50) NOT NULL, " +
+                                    "FOREIGN KEY (clubName) REFERENCES Club(clubName) ON DELETE CASCADE ON UPDATE CASCADE);";
+
+            String createActivityDetailTable = "CREATE TABLE IF NOT EXISTS ActivityDetail (" +
+                                    "activityName VARCHAR(50) PRIMARY KEY, " +
+                                    "place VARCHAR(50) NOT NULL, " +
+                                    "date DATE NOT NULL, " +
+                                    "content TEXT NOT NULL, " +
+                                    "FOREIGN KEY (activityName) REFERENCES Activity(activityName) ON DELETE CASCADE ON UPDATE CASCADE);";
 
             String createApprovalTable = "CREATE TABLE IF NOT EXISTS Approval (" +
                                         "approvalID INT AUTO_INCREMENT PRIMARY KEY, " +
                                         "clubName VARCHAR(50) NOT NULL, " +
                                         "status VARCHAR(20) NOT NULL, " +
-                                        "ActivityName VARCHAR(50) NOT NULL, " +
-                                        "FOREIGN KEY (ActivityName) REFERENCES Activity(activityNAME) ON DELETE CASCADE ON UPDATE CASCADE, "+
+                                        "activityName VARCHAR(50) NOT NULL, " +
+                                        "FOREIGN KEY (activityName) REFERENCES Activity(activityNAME) ON DELETE CASCADE ON UPDATE CASCADE, "+
                                         "FOREIGN KEY (clubName) REFERENCES Club(clubName) ON DELETE CASCADE ON UPDATE CASCADE);";
 
             String createPostTable = "CREATE TABLE IF NOT EXISTS Post (" +
@@ -71,6 +71,8 @@ public class CREATE {
                                     "clubName VARCHAR(50) NOT NULL, " +
                                     "title VARCHAR(100) NOT NULL, " +
                                     "content TEXT NOT NULL, " +
+                                    "WriterID INT NOT NULL, " +
+                                    "FOREIGN KEY (WriterID) REFERENCES Student(StudentID) ON DELETE CASCADE ON UPDATE CASCADE, " +
                                     "FOREIGN KEY (clubName) REFERENCES Club(clubName) ON DELETE CASCADE ON UPDATE CASCADE); ";
 
             String createFeedbackTable = "CREATE TABLE IF NOT EXISTS Feedback (" +
