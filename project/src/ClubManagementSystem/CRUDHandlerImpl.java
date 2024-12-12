@@ -57,42 +57,49 @@ public class CRUDHandlerImpl implements CRUDHandler {
     }
 
     @Override
-    public void handleUpdate(Connection con, String menuName) throws SQLException {
-        System.out.println(menuName + " 데이터를 수정합니다.");
-        System.out.print("수정할 ID: ");
-        String id = sc.nextLine();
-        System.out.print("수정할 내용을 입력하세요 (필드명=값 형식으로 쉼표로 구분): ");
-        String input = sc.nextLine();
+public void handleUpdate(Connection con, String menuName) throws SQLException {
+    System.out.println(menuName + " 데이터를 수정합니다.");
+    System.out.print("수정할 기준 컬럼 이름 (예: UserID): ");
+    String keyColumn = sc.nextLine(); // 기준 열 이름 입력
+    System.out.print("수정할 기준 값: ");
+    String keyValue = sc.nextLine(); // 기준 값 입력
+    System.out.print("수정할 내용을 입력하세요 (필드명=값 형식으로 쉼표로 구분): ");
+    String input = sc.nextLine();
 
-        StringBuilder queryBuilder = new StringBuilder("UPDATE ");
-        queryBuilder.append(menuName).append(" SET ");
-        String[] updates = input.split(",");
-        for (int i = 0; i < updates.length; i++) {
-            queryBuilder.append(updates[i].trim());
-            if (i < updates.length - 1) {
-                queryBuilder.append(", ");
-            }
-        }
-        queryBuilder.append(" WHERE id = ?");
-
-        try (PreparedStatement pstmt = con.prepareStatement(queryBuilder.toString())) {
-            pstmt.setString(1, id);
-            int rows = pstmt.executeUpdate();
-            if (rows > 0) {
-                System.out.println(menuName + " 데이터가 수정되었습니다.");
-            }
+    // 필드명=값 형식을 쉼표로 구분하여 처리
+    String[] updates = input.split(",");
+    StringBuilder queryBuilder = new StringBuilder("UPDATE ");
+    queryBuilder.append(menuName).append(" SET ");
+    for (int i = 0; i < updates.length; i++) {
+        queryBuilder.append(updates[i].trim());
+        if (i < updates.length - 1) {
+            queryBuilder.append(", ");
         }
     }
+    queryBuilder.append(" WHERE ").append(keyColumn).append(" = ?");
+
+    try (PreparedStatement pstmt = con.prepareStatement(queryBuilder.toString())) {
+        pstmt.setString(1, keyValue); // 기준 값 설정
+        int rows = pstmt.executeUpdate();
+        if (rows > 0) {
+            System.out.println(menuName + " 데이터가 수정되었습니다.");
+        } else {
+            System.out.println(menuName + " 데이터 수정에 실패했습니다.");
+        }
+    }
+}
 
     @Override
     public void handleDelete(Connection con, String menuName) throws SQLException {
         System.out.println(menuName + " 데이터를 삭제합니다.");
-        System.out.print("삭제할 ID: ");
-        String id = sc.nextLine();
+        System.out.print("삭제할 기준 컬럼 이름 (예: UserID): ");
+        String keyColumn = sc.nextLine();
+        System.out.print("삭제할 값: ");
+        String keyValue = sc.nextLine();
 
-        String query = "DELETE FROM " + menuName + " WHERE id = ?";
+        String query = "DELETE FROM " + menuName + " WHERE " + keyColumn + " = ?";
         try (PreparedStatement pstmt = con.prepareStatement(query)) {
-            pstmt.setString(1, id);
+            pstmt.setString(1, keyValue);
             int rows = pstmt.executeUpdate();
             if (rows > 0) {
                 System.out.println(menuName + " 데이터가 삭제되었습니다.");

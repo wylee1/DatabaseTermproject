@@ -21,7 +21,6 @@ public class CREATE {
                         "UserID INT PRIMARY KEY, " +
                         "Username VARCHAR(50) NOT NULL, " +
                         "Phone VARCHAR(20) NOT NULL, " +
-                        "ID VARCHAR(50) NOT NULL, " +
                         "passwd VARCHAR(50) NOT NULL, " +
                         "Role VARCHAR(50) NOT NULL, " +
                         "address VARCHAR(50) NOT NULL);";

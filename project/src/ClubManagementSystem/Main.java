@@ -34,12 +34,12 @@ public class Main {
 
     private static void login(Scanner sc) {
         try (Connection con = connectDB()) {
-            System.out.print("ID: ");
+            System.out.print("UserID: ");
             String id = sc.nextLine();
             System.out.print("Password: ");
             String passwd = sc.nextLine();
     
-            String query = "SELECT * FROM User WHERE ID = ? AND passwd = ?";
+            String query = "SELECT * FROM User WHERE UserID = ? AND passwd = ?";
             try (PreparedStatement pstmt = con.prepareStatement(query)) {
                 pstmt.setString(1, id);
                 pstmt.setString(2, passwd);
@@ -52,7 +52,7 @@ public class Main {
                         ProfessorMenu professorMenu = new ProfessorMenu(con, sc);
                         professorMenu.showMenu();
                     } else if ("student".equalsIgnoreCase(role)) {
-                        String userId = rs.getString("ID");
+                        String userId = rs.getString("UserID");
                         StudentMenu studentMenu = new StudentMenu(con, sc, userId);
                         studentMenu.showMenu(); // 메뉴로 이동
                     }
@@ -75,8 +75,6 @@ public class Main {
             String name = sc.nextLine();
             System.out.print("전화번호: ");
             String phone = sc.nextLine();
-            System.out.print("ID: ");
-            String id = sc.nextLine();
             System.out.print("Password: ");
             String passwd = sc.nextLine();
             System.out.print("직급 (student/professor): ");
@@ -84,8 +82,8 @@ public class Main {
             System.out.print("주소: ");
             String address = sc.nextLine();
 
-            String query = "INSERT INTO User (UserID, Username, Phone, ID, passwd, Role, address) " +
-                        "VALUES ('"+ num + "', '" + name + "', '" + phone + "', '" + id + "', '" + passwd + "', '" + role + "', '" + address + "')";
+            String query = "INSERT INTO User (UserID, Username, Phone, passwd, Role, address) " +
+                        "VALUES ('"+ num + "', '" + name + "', '" + phone + "', '" + passwd + "', '" + role + "', '" + address + "')";
             stmt.executeUpdate(query);
             System.out.println("회원가입 성공!");
         } catch (SQLException e) {
