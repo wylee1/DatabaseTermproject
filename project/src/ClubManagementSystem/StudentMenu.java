@@ -8,6 +8,9 @@ public class StudentMenu {
     private Scanner sc;
     private String clubRole;
     private String userId;
+    private String grade;
+    private String studentID;
+    private String club;
     private CRUDHandler crudHandler;
 
     public StudentMenu(Connection con, Scanner sc, String userId) {
@@ -167,6 +170,9 @@ public class StudentMenu {
         if (rowsInserted > 0) {
             System.out.println("새로운 학생 정보가 추가되었습니다!");
             this.clubRole = clubRole; // 업데이트된 역할 저장
+            this.club = club;
+            this.grade = grade;
+            this.studentID = studentID;
         } else {
             System.out.println("학생 정보 추가에 실패했습니다.");
         }
@@ -192,6 +198,9 @@ public class StudentMenu {
         if (rowsUpdated > 0) {
             System.out.println("학생 정보가 업데이트되었습니다!");
             this.clubRole = clubRole; // 업데이트된 역할 저장
+            this.club = club;
+            this.grade = grade;
+            this.studentID = studentID;
         } else {
             System.out.println("학생 정보 업데이트에 실패했습니다.");
         }
